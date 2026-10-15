@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block body %}<div class="narrow"><div class="card">
+  <h2>Congratulations, {{name}}!</h2>
+  <p class="sub">Your booking is successfully completed. We will call you soon to confirm the date.</p>
+  <p><a class="btn" href="{{wa}}">Also send on WhatsApp</a> <a class="btn ghost" href="{{url_for('home')}}">Back to home</a></p>
+</div></div>{% endblock %}

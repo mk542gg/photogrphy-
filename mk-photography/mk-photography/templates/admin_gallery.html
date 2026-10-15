@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}{{gal.title}} - Admin{% endblock %}
+{% block body %}<section class="sec"><div class="wrap">
+  <div class="bar"><div><h2>{{gal.title}}</h2><p class="sub" style="margin:0">Client: {{gal.client_name}} | Code <strong>{{gal.code}}</strong> | PIN <strong>{{gal.pin}}</strong></p></div>
+  <a class="btn ghost" href="{{url_for('admin')}}#galleries">Back to dashboard</a></div>
+  <form method="post" action="{{url_for('gallery_upload',i=gal.id)}}" enctype="multipart/form-data" class="card" style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;margin-bottom:20px">
+    <div><label for="ph">Add photos</label><input id="ph" type="file" name="photos" accept="image/*" multiple required></div><button class="btn">Upload</button></form>
+  <div class="thumbs">{% for p in photos %}<div><img loading="lazy" src="{{url_for('media',name=p.filename)}}" alt="Photo {{loop.index}}">
+    {% if p.favorite %}<span style="position:absolute;left:6px;top:4px;color:#d81b60;font-size:1.3rem" title="Client favorite">♥</span>{% endif %}
+    <form method="post" action="{{url_for('photo_delete',pid=p.id)}}"><button class="btn sm danger" aria-label="Delete photo">x</button></form></div>
+  {% else %}<p class="sub">No photos yet.</p>{% endfor %}</div>
+</div></section>{% endblock %}

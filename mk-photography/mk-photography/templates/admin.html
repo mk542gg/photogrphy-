@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% block title %}Admin - {{B.name}}{% endblock %}
+{% block body %}<section class="sec"><div class="wrap">
+  <div class="bar"><h2>Dashboard</h2><a class="btn ghost" href="{{url_for('admin_logout')}}">Log out</a></div>
+  <div class="tabs"><a class="chip" href="#bookings">Bookings ({{bookings|length}})</a><a class="chip" href="#galleries">Client galleries ({{galleries|length}})</a><a class="chip" href="#portfolio">Portfolio ({{portfolio|length}})</a></div>
+
+  <h3 id="bookings" style="margin:24px 0 12px">Bookings</h3>
+  <div class="scroll"><table><tr><th>Client</th><th>Occasion</th><th>Date</th><th>Place</th><th>Status</th><th></th></tr>
+  {% for b in bookings %}<tr>
+    <td><strong>{{b.name}}</strong><br><a href="tel:{{b.phone}}">{{b.phone}}</a> <a href="https://wa.me/91{{b.phone}}">WhatsApp</a>{% if b.message %}<br><small>{{b.message}}</small>{% endif %}</td>
+    <td>{{b.occasion}}</td><td>{{b.event_date}}</td><td>{{b.location}}</td>
+    <td><form method="post" action="{{url_for('booking_status',i=b.id)}}"><select name="status" onchange="this.form.submit()" aria-label="Status">
+      {% for s in ['New','Confirmed','Advance paid','Completed','Cancelled'] %}<option {{'selected' if s==b.status}}>{{s}}</option>{% endfor %}</select></form></td>
+    <td><form method="post" action="{{url_for('booking_delete',i=b.id)}}" onsubmit="return confirm('Delete this booking?')"><button class="btn sm danger">Delete</button></form></td></tr>
+  {% else %}<tr><td colspan="6">No bookings yet.</td></tr>{% endfor %}</table></div>
+
+  <h3 id="galleries" style="margin:40px 0 12px">Client galleries</h3>
+  <form method="post" action="{{url_for('gallery_create')}}" class="card" style="display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-bottom:16px">
+    <div><label for="t">Gallery title</label><input id="t" name="title" placeholder="Priya & Rahul Wedding" required></div>
+    <div><label for="cn">Client name</label><input id="cn" name="client_name" required></div>
+    <button class="btn">Create gallery</button></form>
+  <div class="scroll"><table><tr><th>Title</th><th>Client</th><th>Code</th><th>PIN</th><th>Photos</th><th>Favorites</th><th></th></tr>
+  {% for g in galleries %}<tr><td><a href="{{url_for('gallery_manage',i=g.id)}}"><strong>{{g.title}}</strong></a></td><td>{{g.client_name}}</td><td>{{g.code}}</td><td>{{g.pin}}</td><td>{{g.n}}</td><td>{{g.fav}}</td>
+  <td><form method="post" action="{{url_for('gallery_delete',i=g.id)}}" onsubmit="return confirm('Delete gallery and all its photos?')"><button class="btn sm danger">Delete</button></form></td></tr>
+  {% else %}<tr><td colspan="7">No galleries yet.</td></tr>{% endfor %}</table></div>
+
+  <h3 id="portfolio" style="margin:40px 0 12px">Portfolio photos</h3>
+  <form method="post" action="{{url_for('portfolio_upload')}}" enctype="multipart/form-data" class="card" style="display:grid;grid-template-columns:1fr 2fr auto;gap:12px;align-items:end;margin-bottom:16px">
+    <div><label for="cat">Category</label><select id="cat" name="category">{% for c in cats %}<option>{{c}}</option>{% endfor %}</select></div>
+    <div><label for="ph">Photos (JPG, PNG, WebP)</label><input id="ph" type="file" name="photos" accept="image/*" multiple required></div>
+    <button class="btn">Upload</button></form>
+  <div class="thumbs">{% for p in portfolio %}<div><img loading="lazy" src="{{url_for('media',name=p.filename)}}" alt="{{p.category}}" title="{{p.category}}">
+    <form method="post" action="{{url_for('portfolio_delete',i=p.id)}}"><button class="btn sm danger" aria-label="Delete photo">x</button></form></div>{% endfor %}</div>
+</div></section>{% endblock %}

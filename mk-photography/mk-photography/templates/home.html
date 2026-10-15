@@ -1,0 +1,39 @@
+{% extends "base.html" %}{% block body %}
+<section class="hero"><div class="wrap">
+  <div>
+    <h1>Your day, kept in frames you will keep.</h1>
+    <p class="lead">Weddings, pre-wedding shoots, birthdays and home ceremonies across Belagavi, Dandeli, Hubli, Goa and Maharashtra. Photos and cinematic films by {{B.owner}}.</p>
+    <div class="acts"><a class="btn" href="{{url_for('book')}}">Check my date</a><a class="btn ghost" href="{{url_for('client_login')}}">Open my gallery</a></div>
+  </div>
+  <div class="mosaic">
+    {% for p in feat[:4] %}<img src="{{url_for('media',name=p.filename)}}" alt="{{p.category}} photo by {{B.name}}">{% endfor %}
+    {% for i in range(4 - feat[:4]|length) %}<div class="ph"></div>{% endfor %}
+  </div>
+</div></section>
+
+<section class="sec" id="work"><div class="wrap">
+  <h2>Recent work</h2><p class="sub">Browse by occasion.</p>
+  <div class="cats">{% for c in cats %}<a class="chip" href="{{url_for('portfolio',cat=c)}}">{{c}}</a>{% endfor %}</div>
+  {% if feat %}<div class="grid">{% for p in feat %}<figure><img loading="lazy" src="{{url_for('media',name=p.filename)}}" alt="{{p.category}} photo"></figure>{% endfor %}</div>
+  {% else %}<p class="sub">Photos you upload from the admin panel appear here.</p>{% endif %}
+</div></section>
+
+<section class="sec alt" id="packages"><div class="wrap">
+  <h2>Packages</h2><p class="sub">Book with a {{adv}}% advance. 20% off on wedding and pre-wedding bookings this season.</p>
+  <div class="pk">{% for p in packages %}
+    <div class="pkg"><h3>{{p.name}}</h3><div class="price">{{inr(p.price)}}</div>
+    <small>Advance: {{inr(p.price*adv/100)}}</small>
+    <ul>{% for x in p.points %}<li>{{x}}</li>{% endfor %}</ul>
+    <a class="btn" href="{{url_for('book')}}">Book this</a></div>{% endfor %}</div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <h2>How booking works</h2><p class="sub">No account needed.</p>
+  <div class="steps">
+    <div><h3>Send your date</h3><p>Fill the short booking form with the occasion, date and place.</p></div>
+    <div><h3>Confirm with advance</h3><p>We call you, confirm availability and you pay the advance by UPI.</p></div>
+    <div><h3>We shoot</h3><p>Photos and film, planned around your muhurtham and locations.</p></div>
+    <div><h3>Get your gallery</h3><p>You receive a code and PIN. Pick favorites and download in full quality.</p></div>
+  </div>
+</div></section>
+{% endblock %}

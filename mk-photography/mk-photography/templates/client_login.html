@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Client gallery - {{B.name}}{% endblock %}
+{% block body %}<div class="narrow"><div class="card">
+  <h2>Open your gallery</h2><p class="sub">Enter the 6-character code and 4-digit PIN we sent you.</p>
+  <form method="post">
+    <label for="code">Gallery code</label><input id="code" name="code" maxlength="6" autocomplete="off" required style="text-transform:uppercase">
+    <label for="pin">PIN</label><input id="pin" name="pin" inputmode="numeric" maxlength="4" autocomplete="off" required>
+    <p style="margin-top:20px"><button class="btn" type="submit">Open gallery</button></p>
+  </form></div></div>{% endblock %}

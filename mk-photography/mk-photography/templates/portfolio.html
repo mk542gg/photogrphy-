@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}{{cat or 'Portfolio'}} - {{B.name}}{% endblock %}
+{% block body %}<section class="sec"><div class="wrap">
+  <h2>{{cat or 'Portfolio'}}</h2>
+  <div class="cats"><a class="chip {{'on' if not cat}}" href="{{url_for('portfolio')}}">All</a>
+  {% for c in cats %}<a class="chip {{'on' if c==cat}}" href="{{url_for('portfolio',cat=c)}}">{{c}}</a>{% endfor %}</div>
+  {% if photos %}<div class="grid">{% for p in photos %}<figure><img loading="lazy" src="{{url_for('media',name=p.filename)}}" alt="{{p.category}} photo"></figure>{% endfor %}</div>
+  {% else %}<p class="sub">No photos in this category yet.</p>{% endif %}
+</div></section>{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}{{gal.title}} - {{B.name}}{% endblock %}
+{% block body %}<section class="sec"><div class="wrap">
+  <div class="bar"><div><h2>{{gal.title}}</h2><p class="sub" style="margin:0">For {{gal.client_name}}. Tap the heart to mark favorites - <strong id="favcount">{{photos|selectattr('favorite')|list|length}}</strong> selected.</p></div>
+  <a class="btn ghost" href="{{url_for('client_logout')}}">Close gallery</a></div>
+  {% if photos %}<div class="grid">{% for p in photos %}
+    <figure class="tile"><img class="zoom" loading="lazy" src="{{url_for('media',name=p.filename)}}" alt="Photo {{loop.index}}">
+    <button class="fav {{'on' if p.favorite}}" data-id="{{p.id}}" aria-label="Mark favorite">{{'♥' if p.favorite else '♡'}}</button>
+    <a class="dl" href="{{url_for('download',pid=p.id)}}">Download</a></figure>{% endfor %}</div>
+  {% else %}<p class="sub">Your photos are being edited. Check back soon.</p>{% endif %}
+</div></section>{% endblock %}

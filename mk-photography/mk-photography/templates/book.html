@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block title %}Book a shoot - {{B.name}}{% endblock %}
+{% block body %}<div class="narrow"><div class="card">
+  <h2>Book your shoot</h2><p class="sub">We will call you to confirm the date. Advance payment is taken only after we confirm.</p>
+  <form method="post">
+    <label for="name">Your name</label><input id="name" name="name" required value="{{f.get('name','')}}">
+    <label for="phone">Phone / WhatsApp</label><input id="phone" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required value="{{f.get('phone','')}}">
+    <label for="email">Email (optional)</label><input id="email" name="email" type="email" value="{{f.get('email','')}}">
+    <label for="occasion">Occasion</label>
+    <select id="occasion" name="occasion">{% for c in cats %}<option>{{c}}</option>{% endfor %}</select>
+    <label for="event_date">Event date</label><input id="event_date" name="event_date" type="date" required value="{{f.get('event_date','')}}">
+    <label for="location">Shoot place</label>
+    <select id="location" name="location">{% for p in places %}<option>{{p}}</option>{% endfor %}</select>
+    <label for="message">Anything else?</label><textarea id="message" name="message">{{f.get('message','')}}</textarea>
+    <p style="margin-top:20px"><button class="btn" type="submit">Send booking request</button></p>
+  </form></div></div>{% endblock %}

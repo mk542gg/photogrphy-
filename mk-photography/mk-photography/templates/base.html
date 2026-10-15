@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}{{B.name}} - Wedding & event photography, Karnataka{% endblock %}</title>
+<meta name="description" content="{{B.name}}: wedding, pre-wedding, birthday and event photography and films across North Karnataka, Goa and Maharashtra.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+</head><body>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="{{url_for('home')}}">MK <span>Photography</span></a>
+  <nav><a href="{{url_for('portfolio')}}">Portfolio</a><a href="{{url_for('home')}}#packages">Packages</a>
+  <a href="{{url_for('client_login')}}">Client gallery</a><a href="{{url_for('book')}}">Book now</a></nav>
+</div></header>
+{% for c,m in get_flashed_messages(with_categories=true) %}<div class="flash {{c}}">{{m}}</div>{% endfor %}
+{% block body %}{% endblock %}
+<footer><div class="wrap">
+  <div><strong>{{B.name}}</strong><br>{{B.studio}}<br>Designed by MALLU MK</div>
+  <div>Call / WhatsApp: <a href="tel:+91{{B.phone}}">{{B.phone}}</a><br>
+  <a href="mailto:{{B.email}}">{{B.email}}</a><br>
+  Instagram: <a href="https://instagram.com/{{B.instagram}}">@{{B.instagram}}</a></div>
+  <div><a href="{{url_for('admin')}}">Admin</a></div>
+</div></footer>
+<div id="lb" role="dialog" aria-label="Photo viewer"><img alt=""></div>
+<script src="{{url_for('static',filename='app.js')}}"></script>
+</body></html>
